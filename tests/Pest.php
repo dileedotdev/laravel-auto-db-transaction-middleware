@@ -1,5 +1,5 @@
 <?php
 
-use Dinhdjj\LaravelAutoDbTransactionMiddleware\Tests\TestCase;
+use Dinhdjj\AutoDBTransaction\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
