@@ -4,7 +4,6 @@ namespace Dinhdjj\LaravelAutoDbTransactionMiddleware\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Dinhdjj\LaravelAutoDbTransactionMiddleware\LaravelAutoDbTransactionMiddlewareServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -23,7 +22,7 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
 
