@@ -41,7 +41,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Dinhdjj\\AutoDBTransaction\\Database\\Factories\\": "database/factories",
             "Dinhdjj\\AutoDBTransaction\\Tests\\": "tests"
         }
     },
