@@ -7,6 +7,11 @@
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
+## Requirements
+
+    * Laravel 9+
+    * php 8.1+
+
 ## Installation
 
 You can install the package via composer:
@@ -17,8 +22,37 @@ composer require dinhdjj/laravel-auto-db-transaction-middleware
 
 ## Usage
 
+Firstly you should register the middleware to group or you can use middleware in specific routes.
+
 ```php
+/**
+ * The application's route middleware groups.
+ *
+ * @var  array
+ */
+protected $middlewareGroups = [
+    'web' => [
+        ...,
+        \Dinhdjj\AutoDBTransaction\AutoDBTransactionMiddleware::class,
+    ],
+
+    'api' => [
+        ...,
+        \Dinhdjj\AutoDBTransaction\AutoDBTransactionMiddleware::class,
+    ]
 ```
+
+Above is all thing you need to do.
+
+## How it works
+
+Below I will show you how it auto activate db-transaction on each request.
+
+1. It only activate `beginTransaction` on method `POST`, `PUT`, `PATCH`, `DELETE`...(not `GET`) methods.
+2. In all cases it will auto `commit` and only `rollback` when it encounter an unhandled exception.
+3. It will also throw exceptions in some cases.
+   - When you miss `commit` or `rollback` on your own `beginTransaction`.
+   - When you use redundant `commit` or `rollback` db-transaction.
 
 ## Testing
 

@@ -2,6 +2,7 @@
 
 namespace Dinhdjj\AutoDBTransaction\Tests;
 
+use Dinhdjj\AutoDBTransaction\AutoDBTransactionServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -19,6 +20,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
+            AutoDBTransactionServiceProvider::class,
         ];
     }
 
@@ -26,9 +28,9 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_laravel-auto-db-transaction-middleware_table.php.stub';
+        include __DIR__.'/web.php';
+
+        $migration = include __DIR__.'/create_users_table.php';
         $migration->up();
-        */
     }
 }

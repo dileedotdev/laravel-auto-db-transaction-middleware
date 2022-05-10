@@ -59,7 +59,9 @@
     },
     "extra": {
         "laravel": {
-            "providers": [],
+            "providers": [
+                "Dinhdjj\\AutoDBTransaction\\AutoDBTransactionServiceProvider"
+            ],
             "aliases": {}
         }
     },
