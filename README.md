@@ -54,6 +54,63 @@ Below I will show you how it auto activate db-transaction on each request.
    - When you miss `commit` or `rollback` on your own `beginTransaction`.
    - When you use redundant `commit` or `rollback` db-transaction.
 
+## Exception handler
+
+When an exception is thrown, in most cases behaver of this package will `rollBack` the db-transaction, but if you not use `default logging exception handler of laravel` the package will evaluate that you handled the exception and it will continue `commit` db-transaction.
+
+Below is the example of cases not use `default logging exception handler of laravel`
+
+```php
+//App\Exceptions\Handler
+
+$this->reportable(function (InvalidOrderException $e) {
+    //
+})->stop();
+
+$this->reportable(function (InvalidOrderException $e) {
+    return false;
+});
+```
+
+or
+
+```php
+namespace App\Exceptions;
+ 
+use Exception;
+ 
+class InvalidOrderException extends Exception
+{
+    /**
+     * Report the exception.
+     *
+     * @return bool|null
+     */
+    public function report()
+    {
+        return true;
+        // or
+        return null;
+    }
+}
+```
+
+If you not use `default logging exception handler of laravel` and you want to `rollBack` the db-transaction, you can use this:
+
+```php
+// 1. use your own db-transaction
+DB::beginTransaction();
+// your code
+DB::rollBack();
+```
+
+```php
+// 2. You helper method to rollback the package's db-transaction
+$this->reportable(function (InvalidOrderException $e) {
+    \Dinhdjj\AutoDBTransaction\Facades::rollBack();
+})->stop();
+```
+
 ## Testing
 
 ```bash
