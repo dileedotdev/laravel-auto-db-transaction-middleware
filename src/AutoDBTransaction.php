@@ -51,10 +51,12 @@ class AutoDBTransaction
         $message = 'Expected transaction level is '.$this->transactionLevel.', but got '.DB::transactionLevel().'.';
 
         if (DB::transactionLevel() > $this->transactionLevel) {
+            $message .= ' You must [commit/rollback] your own db-transaction.';
             throw new OtherUnhandledDBTransactionsException($message);
         }
 
         if (DB::transactionLevel() < $this->transactionLevel) {
+            $message .= ' You can\'t [commit/rollback] not your own db-transaction.';
             throw new HandledTransactionException($message);
         }
 
